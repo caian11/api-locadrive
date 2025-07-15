@@ -9,7 +9,7 @@ public class TodoContext : DbContext
     {
     }
 
-    //ADICIONAR AQUI 
+    //ADICIONAR AQUI AS ENTIDADES DO BD
     public DbSet<Veiculo> Veiculo { get; set; } = null!;
     public DbSet<Seguro> Seguros { get; set; } = null!;
 }
