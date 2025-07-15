@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using api_teste.DataContexts;
 using api_teste.Dtos;
 using api_teste.Models;
 using Microsoft.EntityFrameworkCore;
@@ -17,99 +18,124 @@ namespace api_teste.Services
             _context = context;
         }
 
-        public async Task<IEnumerable<PessoaDto>> GetAllAsync()
+        public async Task<List<Pessoa>> GetAllAsync()
         {
-            return await _context.Pessoas
-                .Select(p => new PessoaDto
+            try
+            {
+                return await _context.Pessoas
+                    .Include(p => p.Endereco)
+                    .ToListAsync();
+            }
+            catch
+            {
+                throw;
+            }
+        }
+
+        public async Task<Pessoa?> GetByIdAsync(int id)
+        {
+            try
+            {
+                return await _context.Pessoas
+                    .Include(p => p.Endereco)
+                    .SingleOrDefaultAsync(p => p.Id == id);
+            }
+            catch
+            {
+                throw;
+            }
+        }
+
+        public bool EnderecoExists(int enderecoId)
+        {
+            try
+            {
+                return _context.Enderecos.Any(e => e.Id == enderecoId);
+            }
+            catch
+            {
+                throw;
+            }
+        }
+
+        public async Task<Pessoa?> CreateAsync(PessoaDto dto)
+        {
+            try
+            {
+                if (!EnderecoExists(dto.EnderecoId))
+                    return null;
+
+                var newPessoa = new Pessoa
                 {
-                    Id = p.id,
-                    Nome = p.nome,
-                    Email = p.email,
-                    Cpf = p.cpf,
-                    Senha = p.senha,
-                    DataNascimento = p.data_nascimento,
-                    Status = p.status,
-                    EnderecoId = p.endereco,
-                    CreatedAt = p.created_at,
-                    UpdatedAt = p.updated_at
-                })
-                .ToListAsync();
-        }
+                    Nome = dto.Nome,
+                    Email = dto.Email,
+                    Cpf = dto.Cpf,
+                    Senha = dto.Senha,
+                    DataNascimento = dto.DataNascimento,
+                    Status = dto.Status,
+                    EnderecoId = dto.EnderecoId,
+                    CreatedAt = DateTime.UtcNow,
+                    UpdatedAt = DateTime.UtcNow
+                };
 
-        public async Task<PessoaDto?> GetByIdAsync(int id)
-        {
-            var p = await _context.Pessoas.FindAsync(id);
-            if (p == null) return null;
-
-            return new PessoaDto
+                await _context.Pessoas.AddAsync(newPessoa);
+                await _context.SaveChangesAsync();
+                return newPessoa;
+            }
+            catch
             {
-                Id = p.id,
-                Nome = p.nome,
-                Email = p.email,
-                Cpf = p.cpf,
-                Senha = p.senha,
-                DataNascimento = p.data_nascimento,
-                Status = p.status,
-                EnderecoId = p.endereco,
-                CreatedAt = p.created_at,
-                UpdatedAt = p.updated_at
-            };
+                throw;
+            }
         }
 
-        public async Task<PessoaDto> CreateAsync(PessoaDto dto)
+        public async Task<Pessoa?> UpdateAsync(int id, PessoaDto dto)
         {
-            var entity = new Pessoa
+            try
             {
-                nome = dto.Nome,
-                email = dto.Email,
-                cpf = dto.Cpf,
-                senha = dto.Senha,
-                data_nascimento = dto.DataNascimento,
-                status = dto.Status,
-                endereco = dto.EnderecoId,
-                created_at = DateTime.UtcNow,
-                updated_at = DateTime.UtcNow
-            };
+                var existing = await GetByIdAsync(id);
+                if (existing == null)
+                    return null;
 
-            _context.Pessoas.Add(entity);
-            await _context.SaveChangesAsync();
+                existing.Nome = dto.Nome;
+                existing.Email = dto.Email;
+                existing.Cpf = dto.Cpf;
+                existing.Senha = dto.Senha;
+                existing.DataNascimento = dto.DataNascimento;
+                existing.Status = dto.Status;
+                existing.EnderecoId = dto.EnderecoId;
+                existing.UpdatedAt = DateTime.UtcNow;
 
-            dto.Id = entity.id;
-            dto.CreatedAt = entity.created_at;
-            dto.UpdatedAt = entity.updated_at;
-
-            return dto;
+                _context.Pessoas.Update(existing);
+                await _context.SaveChangesAsync();
+                return existing;
+            }
+            catch
+            {
+                throw;
+            }
         }
 
-        public async Task<PessoaDto?> UpdateAsync(int id, PessoaDto dto)
+        public async Task<Pessoa?> DeleteAsync(int id)
         {
-            var entity = await _context.Pessoas.FindAsync(id);
-            if (entity == null) return null;
+            try
+            {
+                var existing = await GetByIdAsync(id);
+                if (existing == null)
+                    return null;
 
-            entity.nome = dto.Nome;
-            entity.email = dto.Email;
-            entity.cpf = dto.Cpf;
-            entity.senha = dto.Senha;
-            entity.data_nascimento = dto.DataNascimento;
-            entity.status = dto.Status;
-            entity.endereco = dto.EnderecoId;
-            entity.updated_at = DateTime.UtcNow;
-
-            _context.Entry(entity).State = EntityState.Modified;
-            await _context.SaveChangesAsync();
-
-            dto.UpdatedAt = entity.updated_at;
-            return dto;
+                _context.Pessoas.Remove(existing);
+                await _context.SaveChangesAsync();
+                return existing;
+            }
+            catch
+            {
+                throw;
+            }
         }
 
-        public async Task<bool> DeleteAsync(int id)
+        private async Task<bool> ExistsAsync(int id)
         {
-            var entity = await _context.Pessoas.FindAsync(id);
-            if (entity == null) return false;
-
-            _context.Pessoas.Remove(entity);
-            await _context.SaveChangesAsync();
-            return true;
+            return await _context.Pessoas.AnyAsync(p => p.Id == id);
         }
     }
 }

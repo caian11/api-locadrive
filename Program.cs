@@ -1,7 +1,7 @@
 using Microsoft.EntityFrameworkCore;
-using api_teste.Models;
 using api_teste.Services;
 using Microsoft.AspNetCore.Mvc;
+using api_teste.DataContexts;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -21,6 +21,8 @@ builder.Services.AddDbContext<TodoContext>(options =>
 //ADICIONAR AQUI OS SERVICES
 builder.Services.AddScoped<VeiculoService>();
 builder.Services.AddScoped<SeguroService>();
+builder.Services.AddScoped<PessoaService>();
+
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
