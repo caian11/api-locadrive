@@ -81,7 +81,7 @@ CREATE TABLE veiculo (
   UNIQUE KEY uq_veiculo_renavam(renavam),
   UNIQUE KEY uq_veiculo_chassi (chassi)
 ) ENGINE=InnoDB;
-
+select * from veiculo;
 -- 7) Tabela Locacao
 CREATE TABLE locacao (
   id INT AUTO_INCREMENT PRIMARY KEY,
@@ -138,4 +138,32 @@ CREATE TABLE seguro_locacao_veiculo (
   CONSTRAINT fk_slv_seguro    FOREIGN KEY (seguro_id)             REFERENCES seguro(id),
   CONSTRAINT fk_slv_locacao   FOREIGN KEY (locacao_veiculo_id)    REFERENCES locacao_veiculo(id)
 ) ENGINE=InnoDB;
-*/
+
+INSERT INTO uf (nome, sigla, created_at, updated_at) VALUES
+('São Paulo', 'SP', CURDATE(), CURDATE()),
+('Minas Gerais', 'MG', CURDATE(), CURDATE()),
+('Rio de Janeiro', 'RJ', CURDATE(), CURDATE()),
+('Bahia', 'BA', CURDATE(), CURDATE()),
+('Paraná', 'PR', CURDATE(), CURDATE());
+
+INSERT INTO cidade (nome, uf_id, created_at, updated_at) VALUES
+-- São Paulo (id = 1)
+('São Paulo', 1, CURDATE(), CURDATE()),
+('Campinas', 1, CURDATE(), CURDATE()),
+('Santos', 1, CURDATE(), CURDATE()),
+
+-- Minas Gerais (id = 2)
+('Belo Horizonte', 2, CURDATE(), CURDATE()),
+('Uberlândia', 2, CURDATE(), CURDATE()),
+
+-- Rio de Janeiro (id = 3)
+('Rio de Janeiro', 3, CURDATE(), CURDATE()),
+('Niterói', 3, CURDATE(), CURDATE()),
+
+-- Bahia (id = 4)
+('Salvador', 4, CURDATE(), CURDATE()),
+('Feira de Santana', 4, CURDATE(), CURDATE()),
+
+-- Paraná (id = 5)
+('Curitiba', 5, CURDATE(), CURDATE()),
+('Londrina', 5, CURDATE(), CURDATE());
