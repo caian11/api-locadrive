@@ -10,9 +10,9 @@ namespace api_teste.Services
 {
     public class SeguroService
     {
-        private readonly TodoContext _context;
+        private readonly AppDbContext _context;
 
-        public SeguroService(TodoContext context)
+        public SeguroService(AppDbContext context)
         {
             _context = context;
         }

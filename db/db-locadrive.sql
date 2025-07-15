@@ -1,3 +1,4 @@
+/*
 -- 1) Cria o banco e seleciona
 DROP database IF exists locadora_veiculos;
 CREATE DATABASE IF NOT EXISTS locadora_veiculos
@@ -137,3 +138,4 @@ CREATE TABLE seguro_locacao_veiculo (
   CONSTRAINT fk_slv_seguro    FOREIGN KEY (seguro_id)             REFERENCES seguro(id),
   CONSTRAINT fk_slv_locacao   FOREIGN KEY (locacao_veiculo_id)    REFERENCES locacao_veiculo(id)
 ) ENGINE=InnoDB;
+*/

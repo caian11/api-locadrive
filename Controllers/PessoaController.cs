@@ -56,8 +56,8 @@ namespace api_teste.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
         {
-            var ok = await _service.DeleteAsync(id);
-            if (!ok) return NotFound();
+            var pessoaRemovida = await _service.DeleteAsync(id);
+            if (pessoaRemovida == null) return NotFound();
             return NoContent();
         }
     }

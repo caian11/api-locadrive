@@ -12,4 +12,6 @@ public class TodoContext : DbContext
     //ADICIONAR AQUI AS ENTIDADES DO BD
     public DbSet<Veiculo> Veiculo { get; set; } = null!;
     public DbSet<Seguro> Seguros { get; set; } = null!;
+    public DbSet<Locacao> Locacoes { get; set; } = null!;
+    public DbSet<LocacaoVeiculo> LocacaoVeiculos { get; set; } = null!;
 }

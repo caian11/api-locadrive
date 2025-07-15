@@ -11,9 +11,9 @@ namespace api_teste.Services
 {
     public class PessoaService
     {
-        private readonly TodoContext _context;
+        private readonly AppDbContext _context;
 
-        public PessoaService(TodoContext context)
+        public PessoaService(AppDbContext context)
         {
             _context = context;
         }
