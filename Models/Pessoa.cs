@@ -40,5 +40,7 @@ namespace api_teste.Models
 
         [ForeignKey("EnderecoId")]
         public Endereco? Endereco { get; set; }
+
+        public List<Locacao> locacoes { get; set; } = new();
     }
 }

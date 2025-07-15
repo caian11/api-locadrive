@@ -15,7 +15,7 @@ builder.Services.Configure<ApiBehaviorOptions>(options =>
 });
 
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
-builder.Services.AddDbContext<TodoContext>(options =>
+builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString)));
 
 //ADICIONAR AQUI OS SERVICES

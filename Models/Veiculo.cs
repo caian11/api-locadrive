@@ -18,6 +18,7 @@ namespace api_teste.Models
         public string potencia { get; set; }
         public string cor {  get; set; }
         public float valor_diaria { get; set; }
+        public List<LocacaoVeiculo> locacoes { get; set; } = new();
 
     }
 }

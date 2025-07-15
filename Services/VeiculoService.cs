@@ -10,9 +10,9 @@ namespace api_teste.Services
 {
     public class VeiculoService
     {
-        private readonly TodoContext _context;
+        private readonly AppDbContext _context;
 
-        public VeiculoService(TodoContext context)
+        public VeiculoService(AppDbContext context)
         {
             _context = context;
         }
