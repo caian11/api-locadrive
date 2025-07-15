@@ -18,6 +18,7 @@ var connectionString = builder.Configuration.GetConnectionString("DefaultConnect
 builder.Services.AddDbContext<TodoContext>(options =>
     options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString)));
 
+//ADICIONAR AQUI OS SERVICES
 builder.Services.AddScoped<VeiculoService>();
 builder.Services.AddScoped<SeguroService>();
 

@@ -85,7 +85,6 @@ namespace api_teste.Services
             _context.Veiculo.Add(entity);
             await _context.SaveChangesAsync();
 
-            // Preenche o Id gerado
             dto.Id = entity.id;
             return dto;
         }
@@ -112,7 +111,6 @@ namespace api_teste.Services
             _context.Entry(v).State = EntityState.Modified;
             await _context.SaveChangesAsync();
 
-            // Retorna o DTO atualizado
             return new VeiculoDto
             {
                 Id = v.id,

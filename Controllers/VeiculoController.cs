@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using api_teste.Dtos;
-using api_teste.Models;      // para a classe Veiculo
+using api_teste.Models;     
 using api_teste.Services;
 using Microsoft.AspNetCore.Mvc;
 
@@ -43,7 +43,6 @@ namespace api_teste.Controllers
             return CreatedAtAction(nameof(GetVeiculo), new { id = criado.Id }, criado);
         }
 
-        // 2) Alterado: retorna ActionResult<Veiculo> e devolve a entidade completa
         [HttpPut("{id}")]
         public async Task<ActionResult<Veiculo>> PutVeiculo(int id, VeiculoDto dto)
         {
