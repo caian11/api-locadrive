@@ -1,63 +1,60 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using api_teste.Dtos;
-using api_teste.Models;      // para a classe Veiculo
 using api_teste.Services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace api_teste.Controllers
 {
-    [Route("api/[controller]")]
     [ApiController]
-    public class VeiculoController : ControllerBase
+    [Route("api/[controller]")]
+    public class SeguroController : ControllerBase
     {
-        private readonly VeiculoService _service;
+        private readonly SeguroService _service;
 
-        public VeiculoController(VeiculoService service)
+        public SeguroController(SeguroService service)
         {
             _service = service;
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<VeiculoDto>>> GetVeiculos()
+        public async Task<ActionResult<IEnumerable<SeguroDto>>> GetSeguros()
         {
             var lista = await _service.GetAllAsync();
             return Ok(lista);
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<VeiculoDto>> GetVeiculo(int id)
+        public async Task<ActionResult<SeguroDto>> GetSeguro(int id)
         {
-            var dto = await _service.GetByIdAsync(id);
-            if (dto == null) return NotFound();
-            return Ok(dto);
+            var seguro = await _service.GetByIdAsync(id);
+            if (seguro == null) return NotFound();
+            return Ok(seguro);
         }
 
         [HttpPost]
-        public async Task<ActionResult<VeiculoDto>> PostVeiculo(VeiculoDto dto)
+        public async Task<ActionResult<SeguroDto>> Post([FromBody] SeguroDto dto)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
             var criado = await _service.CreateAsync(dto);
-            return CreatedAtAction(nameof(GetVeiculo), new { id = criado.Id }, criado);
+            return CreatedAtAction(nameof(GetSeguro), new { id = criado.Id }, criado);
         }
 
-        // 2) Alterado: retorna ActionResult<Veiculo> e devolve a entidade completa
         [HttpPut("{id}")]
-        public async Task<ActionResult<Veiculo>> PutVeiculo(int id, VeiculoDto dto)
+        public async Task<ActionResult<SeguroDto>> Put(int id, [FromBody] SeguroDto dto)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
             var atualizado = await _service.UpdateAsync(id, dto);
-            if (atualizado == null)
-                return NotFound();
+            if (atualizado == null) return NotFound();
             return Ok(atualizado);
         }
 
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteVeiculo(int id)
+        public async Task<IActionResult> Delete(int id)
         {
             var ok = await _service.DeleteAsync(id);
             if (!ok) return NotFound();

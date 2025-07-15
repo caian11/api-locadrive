@@ -10,4 +10,5 @@ public class TodoContext : DbContext
     }
 
     public DbSet<Veiculo> Veiculo { get; set; } = null!;
+    public DbSet<Seguro> Seguros { get; set; } = null!;
 }
