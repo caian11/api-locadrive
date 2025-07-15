@@ -1,27 +1,44 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
 
 namespace api_teste.Models
 {
     [Table("pessoa")]
     public class Pessoa
     {
-        public int id { get; set; }
-        public string nome { get; set; } = null!;
-        public string email { get; set; } = null!;
-        public string cpf { get; set; } = null!;
-        public string senha { get; set; } = null!;
+        [Column("id")]
+        public int Id { get; set; }
 
-        public DateTime data_nascimento { get; set; }
+        [Column("nome")]
+        public string Nome { get; set; } = null!;
 
-        public bool status { get; set; }
+        [Column("email")]
+        public string Email { get; set; } = null!;
 
-        public int endereco { get; set; }
+        [Column("cpf")]
+        public string Cpf { get; set; } = null!;
 
-        public DateTime created_at { get; set; }
-        public DateTime updated_at { get; set; }
+        [Column("senha")]
+        public string Senha { get; set; } = null!;
 
-         [ForeignKey("endereco")]
-        public Endereco? EnderecoNavigation { get; set; }
+        [Column("data_nascimento")]
+        public DateTime? DataNascimento { get; set; }
+
+        [Column("status")]
+        public bool Status { get; set; }
+
+        [Column("created_at")]
+        public DateTime CreatedAt { get; set; }
+
+        [Column("updated_at")]
+        public DateTime UpdatedAt { get; set; }
+        
+        [JsonIgnore]
+        [Column("endereco_id")]
+        public int EnderecoId { get; set; }
+
+        [ForeignKey("EnderecoId")]
+        public Endereco? Endereco { get; set; }
     }
 }
