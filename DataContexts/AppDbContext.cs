@@ -12,6 +12,7 @@ namespace api_teste.DataContexts
         public DbSet<Seguro> Seguros { get; set; }
         public DbSet<Endereco> Enderecos { get; set; } = null!;
         public DbSet<Pessoa> Pessoas { get; set; } = null!;
+        public DbSet<Cidade> Cidades { get; set; } = null!;
         public DbSet<LocacaoVeiculo> LocacaoVeiculos { get; set; } = null!;
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

@@ -22,6 +22,8 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 builder.Services.AddScoped<VeiculoService>();
 builder.Services.AddScoped<SeguroService>();
 builder.Services.AddScoped<PessoaService>();
+builder.Services.AddScoped<EnderecoService>();
+
 
 // 1) Definir política de CORS
 builder.Services.AddCors(options =>
