@@ -34,11 +34,11 @@ namespace api_teste.Models
         [Column("updated_at")]
         public DateTime UpdatedAt { get; set; }
         
-        [JsonIgnore]
         [Column("endereco_id")]
         public int EnderecoId { get; set; }
 
         [ForeignKey("EnderecoId")]
+        [JsonIgnore]
         public Endereco? Endereco { get; set; }
 
         public List<Locacao> locacoes { get; set; } = new();

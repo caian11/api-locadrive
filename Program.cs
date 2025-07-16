@@ -18,11 +18,22 @@ var connectionString = builder.Configuration.GetConnectionString("DefaultConnect
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString)));
 
-//ADICIONAR AQUI OS SERVICES
+// ADICIONE AQUI OS SERVICES
 builder.Services.AddScoped<VeiculoService>();
 builder.Services.AddScoped<SeguroService>();
 builder.Services.AddScoped<PessoaService>();
 
+// 1) Definir política de CORS
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowAll", policy =>
+    {
+        policy
+            .AllowAnyOrigin()
+            .AllowAnyHeader()
+            .AllowAnyMethod();
+    });
+});
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
@@ -34,6 +45,9 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+// 2) Registra o middleware de CORS antes de UseAuthorization
+app.UseCors("AllowAll");
 
 app.UseAuthorization();
 

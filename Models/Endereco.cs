@@ -32,11 +32,11 @@ namespace api_teste.Models
         [Column("updated_at")]
         public DateTime UpdatedAt { get; set; }
 
-        [JsonIgnore]
         [Column("cidade_id")]
         public int CidadeId { get; set; }
         
         [ForeignKey("CidadeId")]
+        [JsonIgnore]
         public Cidade? Cidade { get; set; }
     }
 }

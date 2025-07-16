@@ -1,5 +1,6 @@
 ﻿using api_teste.Dtos;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
 
 namespace api_teste.Models
 {
@@ -16,6 +17,7 @@ namespace api_teste.Models
         public int pessoa { get; set; }
 
         [ForeignKey("pessoa")]
+        [JsonIgnore]
         public Pessoa Pessoa { get; set; } = null!;
 
         public DateTime created_at { get; set; }
