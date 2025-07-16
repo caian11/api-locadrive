@@ -23,9 +23,10 @@ builder.Services.AddScoped<VeiculoService>();
 builder.Services.AddScoped<SeguroService>();
 builder.Services.AddScoped<PessoaService>();
 builder.Services.AddScoped<EnderecoService>();
+builder.Services.AddScoped<LocacaoService>();
 
 
-// 1) Definir política de CORS
+// 1) Definir polï¿½tica de CORS
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowAll", policy =>

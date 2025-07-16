@@ -14,9 +14,10 @@ namespace api_teste.Models
         public string status { get; set; } = null!;
         public string numero { get; set; } = null!;
 
-        public int pessoa { get; set; }
+        [Column("pessoa_id")]
+        public int PessoaId { get; set; }
 
-        [ForeignKey("pessoa")]
+        [ForeignKey("PessoaId")]
         [JsonIgnore]
         public Pessoa Pessoa { get; set; } = null!;
 
@@ -24,5 +25,6 @@ namespace api_teste.Models
         public DateTime updated_at { get; set; }
 
         public List<LocacaoVeiculo> veiculos { get; set; } = new();
+        public List<LocacaoSeguro> LocacaoSeguros { get; set; } = new();
     }
 }

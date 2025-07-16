@@ -31,5 +31,6 @@ namespace api_teste.Dtos
 
         [Required]
         public List<LocacaoVeiculoDto> Veiculos { get; set; } = new();
+        public List<int> Seguros { get; set; } = new(); 
     }
 }
