@@ -55,10 +55,10 @@ namespace api_teste.Controllers
         [HttpPost]
         public async Task<ActionResult<PessoaDto>> Post([FromBody] PessoaDto dto)
         {
+            if (!ModelState.IsValid) return BadRequest(ModelState);
+            
             try
             {
-                if (!ModelState.IsValid) return BadRequest(ModelState);
-
                 var criado = await _service.CreateAsync(dto);
 
                 if (criado == null) return NotFound("Endereço não encontrado");

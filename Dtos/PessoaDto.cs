@@ -1,4 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using api_teste.Validations;
+using Microsoft.EntityFrameworkCore;
 
 namespace api_teste.Dtos;
 
@@ -14,9 +16,11 @@ public class PessoaDto
     [Required]
     [StringLength(255, ErrorMessage = "Email deve ter no máximo 255 caracteres.")]
     [EmailAddress(ErrorMessage = "E‑mail em formato inválido.")]
+    [UniqueEmail]
     public string Email { get; set; } = null!;
 
     [Required]
+    [UniqueCpf]
     [RegularExpression(@"^\d{11}$|^\d{3}\.\d{3}\.\d{3}-\d{2}$",
         ErrorMessage = "CPF deve estar no formato 12345678901 ou 123.456.789-01.")]
     public string Cpf { get; set; } = null!;
